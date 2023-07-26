@@ -11,6 +11,7 @@ pen.canvas.height = HEIGHT;
 
 canvas.style.border = "5px solid black";
 function slime(){
+    pen.globalAlpha = 1;
     //Outerbody
     pen.beginPath();
     pen.moveTo(180,540)
@@ -40,6 +41,9 @@ function slime(){
     pen.closePath();
 }
 
+function clear(){
+    pen.clearRect(0, 0, WIDTH, HEIGHT); 
+}
 
 function slimeShy(transparency){
     pen.globalAlpha = transparency;
@@ -62,7 +66,7 @@ function slimeShy(transparency){
 slime();
 
 function loop(){
-    let FPS = 40;
+    let FPS = 60;
     let timeLoop = 1000/FPS;
     let transparency = 0;
     let counter = 0;
@@ -70,15 +74,18 @@ function loop(){
     setInterval(() => {
         slime();
         if(transparency < 1  && counter == transparency){
-            transparency += 0.001;
-            counter += 0.001;
+            transparency += 0.01;
+            counter += 0.01;
+            console.log("up");
         }else if(transparency > 0){
-            transparency -= 0.001;
+            transparency -= 0.01;
+            console.log("down");
             if(transparency < 0){
                 counter = transparency;
             }
-
         }
+        clear();
+        slime()
         slimeShy(transparency);
     }, timeLoop);
 }
